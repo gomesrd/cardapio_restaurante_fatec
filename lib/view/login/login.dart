@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/custom_elevated_button.dart';
 import '../../components/custom_text_form_field.dart';
+import '../../utils/routes.dart';
 import '../../utils/strings.dart';
 
 class Login extends StatefulWidget {
@@ -24,29 +25,35 @@ class _LoginState extends State<Login> {
             key: formLoginPageKey,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  CustomTextFormField(
-                    controller: email,
-                    labelText: AppStrings.emailLabel,
-                  ),
-                  const SizedBox(height: 20),
-                  CustomTextFormField(
-                    controller: password,
-                    labelText: AppStrings.passwordLabel,
-                  ),
-                  const SizedBox(height: 20),
-                  CustomElevatedButton(
-                    value: AppStrings.loginLabel,
-                    onPressed: () {},
-                  ),
-                  const SizedBox(height: 20),
-                  CustomElevatedButton(
-                    value: AppStrings.createAccountLabel,
-                    onPressed: () {},
-                  ),
-                ],
-              ),
+              child: Column(children: [
+                CustomTextFormField(
+                  controller: email,
+                  labelText: AppStrings.emailLabel,
+                ),
+                const SizedBox(height: 20),
+                CustomTextFormField(
+                  controller: password,
+                  labelText: AppStrings.passwordLabel,
+                  isPassword: true,
+                ),
+                const SizedBox(height: 20),
+                CustomElevatedButton(
+                  value: AppStrings.loginLabel,
+                  onPressed: () {
+                    if (formLoginPageKey.currentState!.validate()) {
+                      formLoginPageKey.currentState!.save();
+                      Navigator.pushNamed(context, Routes.menu);
+                    }
+                  },
+                ),
+                const SizedBox(height: 20),
+                CustomElevatedButton(
+                  value: AppStrings.createAccountLabel,
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.register);
+                  },
+                )
+              ]),
             )));
   }
 }

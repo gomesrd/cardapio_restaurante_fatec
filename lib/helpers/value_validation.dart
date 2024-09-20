@@ -1,14 +1,14 @@
 class ValueValidation {
   static String? required(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Insira um valor';
+      return 'Campo obrigatório';
     }
     return null;
   }
 
   static String? numeric(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Insira um valor';
+      return 'Campo obrigatório';
     }
 
     if (double.tryParse(value) == null) {
