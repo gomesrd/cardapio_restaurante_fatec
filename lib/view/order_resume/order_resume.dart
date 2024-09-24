@@ -1,6 +1,8 @@
 import 'package:cardapio_restaurante/components/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../store/order_store.dart';
 import '../../utils/strings.dart';
 
 class OrderItem {
@@ -21,28 +23,10 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  List<OrderItem> orderItems = [
-    OrderItem(name: "Item 1", quantity: 1, price: 10.0),
-    OrderItem(name: "Item 2", quantity: 2, price: 15.0),
-    OrderItem(name: "Item 3", quantity: 1, price: 25.0),
-  ];
-
-  double get totalGeneral => orderItems.fold(0.0, (total, item) => total + item.totalPrice);
-
-  void updateQuantity(int index, int quantity) {
-    setState(() {
-      orderItems[index].quantity = quantity;
-    });
-  }
-
-  void removeItem(int index) {
-    setState(() {
-      orderItems.removeAt(index);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<OrderStore>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const CustomText(labelText: AppStrings.orderItems),
@@ -51,9 +35,9 @@ class _OrderScreenState extends State<OrderScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: orderItems.length,
+              itemCount: store.items.length,
               itemBuilder: (context, index) {
-                final item = orderItems[index];
+                final item = store.items[index];
                 return ListTile(
                   title: Text(item.name),
                   subtitle: Column(
@@ -71,7 +55,7 @@ class _OrderScreenState extends State<OrderScreen> {
                         icon: const Icon(Icons.remove),
                         onPressed: () {
                           if (item.quantity > 1) {
-                            updateQuantity(index, item.quantity - 1);
+                            store.updateItemQuantity(item, item.quantity - 1);
                           }
                         },
                       ),
@@ -79,13 +63,13 @@ class _OrderScreenState extends State<OrderScreen> {
                       IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
-                          updateQuantity(index, item.quantity + 1);
+                          store.updateItemQuantity(item, item.quantity + 1);
                         },
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete),
                         onPressed: () {
-                          removeItem(index);
+                          store.removeItem(item);
                         },
                       ),
                     ],
@@ -99,13 +83,15 @@ class _OrderScreenState extends State<OrderScreen> {
             child: Column(
               children: [
                 Text(
-                  "Total geral: R\$ ${totalGeneral.toStringAsFixed(2)}",
+                  "Total geral: R\$ ${store.total.toStringAsFixed(2)}",
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Ação para confirmar o pedido
+                    if (store.items.isEmpty) return;
+                    store.clear();
+                    Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Pedido confirmado!")),
                     );

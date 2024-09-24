@@ -1,10 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../components/custom_elevated_button.dart';
 import '../../components/custom_text.dart';
 import '../../helpers/show_snack_bar.dart';
 import '../../models/item_menu.dart';
+import '../../models/order_item.dart';
+import '../../store/order_store.dart';
 import '../../utils/strings.dart';
 
 class ItemDetails extends StatefulWidget {
@@ -15,16 +18,17 @@ class ItemDetails extends StatefulWidget {
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
-  int _quantity = 1;
-
-  void _confirmItem() {
-    showSnackBar(context, AppStrings.itemAddOrder);
-    Navigator.pop(context);
-  }
-
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<OrderStore>(context);
+    int quantity = 1;
     ItemMenu itemData = ModalRoute.of(context)!.settings.arguments as ItemMenu;
+
+    void confirmItem() {
+      showSnackBar(context, AppStrings.itemAddOrder);
+      Navigator.pop(context);
+      store.addItem(OrderItem(name: itemData.name, quantity: quantity, price: itemData.price));
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -53,7 +57,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                 title: const Text('${AppStrings.priceLabel}:', style: TextStyle(fontSize: 16)),
                 subtitle: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                   Text(
-                    'R\$ ${(itemData.price * _quantity).toStringAsFixed(2)}',
+                    'R\$ ${(itemData.price * quantity).toStringAsFixed(2)}',
                     style: const TextStyle(fontSize: 22),
                   ),
                   Row(children: [
@@ -61,15 +65,15 @@ class _ItemDetailsState extends State<ItemDetails> {
                         icon: const Icon(Icons.remove),
                         onPressed: () {
                           setState(() {
-                            if (_quantity > 1) _quantity--;
+                            if (quantity > 1) quantity--;
                           });
                         }),
-                    Text('$_quantity', style: const TextStyle(fontSize: 22)),
+                    Text('$quantity', style: const TextStyle(fontSize: 22)),
                     IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
                           setState(() {
-                            _quantity++;
+                            quantity++;
                           });
                         })
                   ])
@@ -77,7 +81,7 @@ class _ItemDetailsState extends State<ItemDetails> {
             CustomElevatedButton(
                 value: AppStrings.addOrderLabel,
                 onPressed: () {
-                  _confirmItem();
+                  confirmItem();
                 })
           ]),
         ));

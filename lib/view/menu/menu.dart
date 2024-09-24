@@ -2,8 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cardapio_restaurante/helpers/generate_menu.dart';
 import 'package:image_network/image_network.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/category_menu.dart';
+import '../../store/order_store.dart';
 import '../../utils/routes.dart';
 import '../../utils/strings.dart';
 
@@ -25,6 +27,8 @@ class _MenuState extends State<Menu> {
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<OrderStore>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.menuLabel),
@@ -45,9 +49,9 @@ class _MenuState extends State<Menu> {
                           minWidth: 16,
                           minHeight: 16,
                         ),
-                        child: const Text(
-                          '3',
-                          style: TextStyle(
+                        child: Text(
+                          "${store.items.length}",
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
                           ),
@@ -60,6 +64,7 @@ class _MenuState extends State<Menu> {
           IconButton(
               icon: const Icon(Icons.logout, size: 32),
               onPressed: () {
+                store.clear();
                 Navigator.pop(context);
               })
         ],
