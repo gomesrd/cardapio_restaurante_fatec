@@ -21,11 +21,10 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
-        body: Expanded(
-          child: Form(
-              key: formLoginPageKey,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Form(
+                key: formLoginPageKey,
                 child: Column(children: [
                   CustomTextFormField(
                     controller: email,
@@ -39,23 +38,19 @@ class _LoginState extends State<Login> {
                   ),
                   const SizedBox(height: 20),
                   CustomElevatedButton(
-                    value: AppStrings.loginLabel,
-                    onPressed: () {
-                      if (formLoginPageKey.currentState!.validate()) {
-                        formLoginPageKey.currentState!.save();
-                        Navigator.pushNamed(context, Routes.menu);
-                      }
-                    },
-                  ),
+                      value: AppStrings.loginLabel,
+                      onPressed: () {
+                        if (formLoginPageKey.currentState!.validate()) {
+                          formLoginPageKey.currentState!.reset();
+                          Navigator.pushNamed(context, Routes.menu);
+                        }
+                      }),
                   const SizedBox(height: 20),
                   CustomElevatedButton(
-                    value: AppStrings.createAccountLabel,
-                    onPressed: () {
-                      Navigator.pushNamed(context, Routes.register);
-                    },
-                  )
-                ]),
-              )),
-        ));
+                      value: AppStrings.createAccountLabel,
+                      onPressed: () {
+                        Navigator.pushNamed(context, Routes.register);
+                      })
+                ]))));
   }
 }

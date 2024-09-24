@@ -22,13 +22,12 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
-  bool _obscureText = true; // Controle da visibilidade da senha
-
+  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: widget.controller,
-      obscureText: widget.isPassword ? _obscureText : false, // Oculta texto se for senha
+      obscureText: widget.isPassword ? _obscureText : false,
       style: TextStyle(fontSize: widget.fontSize),
       decoration: InputDecoration(
         labelText: widget.labelText,
@@ -38,7 +37,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
           onPressed: () {
             setState(() {
-              _obscureText = !_obscureText; // Alterna a visibilidade
+              _obscureText = !_obscureText;
             });
           },
         )

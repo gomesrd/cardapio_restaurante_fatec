@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cardapio_restaurante/helpers/generate_menu.dart';
 import 'package:image_network/image_network.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,40 @@ class _MenuState extends State<Menu> {
       appBar: AppBar(
         title: const Text(AppStrings.menuLabel),
         automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              icon: Stack(children: <Widget>[
+                const Icon(Icons.shopping_cart, size: 32),
+                Positioned(
+                    right: 0,
+                    child: Container(
+                        padding: const EdgeInsets.all(1),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: const Text(
+                          '3',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
+                          textAlign: TextAlign.center,
+                        )))
+              ]),
+              onPressed: () {
+                Navigator.pushNamed(context, Routes.orderResume);
+              }),
+          IconButton(
+              icon: const Icon(Icons.logout, size: 32),
+              onPressed: () {
+                Navigator.pop(context);
+              })
+        ],
       ),
       body: Padding(
           padding: const EdgeInsets.all(20),
@@ -53,16 +88,11 @@ class _MenuState extends State<Menu> {
                         leading: SizedBox(
                           height: 50,
                           width: 50,
-                          child: ImageNetwork(
-                            image: item.image,
-                            height: 50,
-                            width: 50,
-                            borderRadius: BorderRadius.circular(25),
-                            curve: Curves.easeIn,
-                            fitWeb: BoxFitWeb.cover,
-                            onLoading: const CircularProgressIndicator(
-                              color: Colors.indigoAccent,
-                            ),
+                          child: CachedNetworkImage(
+                            imageUrl: item.image,
+                            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                CircularProgressIndicator(value: downloadProgress.progress),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
                           ),
                         ),
                         onTap: () {

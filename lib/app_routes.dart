@@ -1,5 +1,6 @@
 import 'package:cardapio_restaurante/utils/routes.dart';
 import 'package:cardapio_restaurante/view/item_details/item_details.dart';
+import 'package:cardapio_restaurante/view/order_resume/order_resume.dart';
 import 'package:cardapio_restaurante/view/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:cardapio_restaurante/view/login/login.dart';
@@ -12,5 +13,6 @@ class AppRoutes {
     Routes.menu: (context) => const Menu(),
     Routes.register: (context) => const Register(),
     Routes.itemDetails: (context) => const ItemDetails(),
+    Routes.orderResume: (context) => const OrderScreen(),
   };
 }
