@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../components/custom_elevated_button.dart';
 import '../../components/custom_text_form_field.dart';
+import '../../service/auth_service.dart';
 import '../../utils/routes.dart';
 import '../../utils/strings.dart';
 
@@ -40,10 +41,17 @@ class _LoginState extends State<Login> {
                   CustomElevatedButton(
                       value: AppStrings.loginLabel,
                       onPressed: () {
-                        if (formLoginPageKey.currentState!.validate()) {
-                          formLoginPageKey.currentState!.reset();
-                          Navigator.pushNamed(context, Routes.menu);
-                        }
+                        AuthService().login(
+                            usernameController: email,
+                            passwordController: password,
+                            formLoginPageKey: formLoginPageKey,
+                            context: context,
+                            onError: (String error) {
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(error),
+                                backgroundColor: Colors.red,
+                              ));
+                            });
                       }),
                   const SizedBox(height: 20),
                   CustomElevatedButton(

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import '../models/order_item.dart';
 
 class OrderStore extends ChangeNotifier {
-  List<OrderItem> _items = [];
+  final List<OrderItem> _items = [];
 
   List<OrderItem> get items => _items;
 
