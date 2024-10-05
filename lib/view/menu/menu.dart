@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cardapio_restaurante/helpers/generate_menu.dart';
+import 'package:cardapio/helpers/generate_menu.dart';
 import 'package:image_network/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +8,7 @@ import '../../models/category_menu.dart';
 import '../../store/order_store.dart';
 import '../../utils/routes.dart';
 import '../../utils/strings.dart';
+import '../login/login.dart';
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -64,8 +65,13 @@ class _MenuState extends State<Menu> {
           IconButton(
               icon: const Icon(Icons.logout, size: 32),
               onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Login()),
+                  (Route<dynamic> route) => false,
+                );
                 store.clear();
-                Navigator.pop(context);
+                // Navigator.pop(context);
               })
         ],
       ),

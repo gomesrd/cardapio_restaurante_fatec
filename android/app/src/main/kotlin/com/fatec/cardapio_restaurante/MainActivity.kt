@@ -1,4 +1,4 @@
-package com.fatec.cardapio_restaurante
+package com.fatec.cardapio
 
 import io.flutter.embedding.android.FlutterActivity
 

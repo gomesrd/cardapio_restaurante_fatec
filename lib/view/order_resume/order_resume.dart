@@ -1,4 +1,4 @@
-import 'package:cardapio_restaurante/components/custom_text.dart';
+import 'package:cardapio/components/text_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

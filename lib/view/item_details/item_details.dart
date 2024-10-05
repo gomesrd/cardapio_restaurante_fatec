@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/custom_elevated_button.dart';
-import '../../components/custom_text.dart';
+import '../../components/elevated_button_custom.dart';
+import '../../components/text_custom.dart';
 import '../../helpers/show_snack_bar.dart';
 import '../../models/item_menu.dart';
 import '../../models/order_item.dart';
@@ -25,7 +25,7 @@ class _ItemDetailsState extends State<ItemDetails> {
     ItemMenu itemData = ModalRoute.of(context)!.settings.arguments as ItemMenu;
 
     void confirmItem() {
-      showSnackBar(context, AppStrings.itemAddOrder);
+      SnackBarHelper.showMessageError(context, AppStrings.itemAddOrder);
       Navigator.pop(context);
       store.addItem(OrderItem(name: itemData.name, quantity: quantity, price: itemData.price));
     }

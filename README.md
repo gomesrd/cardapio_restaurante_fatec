@@ -1,3 +1,3 @@
-# cardapio_restaurante
+# cardapio
 
 Fatec Rp - Cardápio Restaurante

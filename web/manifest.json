@@ -1,6 +1,6 @@
 {
-    "name": "cardapio_restaurante",
-    "short_name": "cardapio_restaurante",
+    "name": "cardapio",
+    "short_name": "cardapio",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
-import '../../utils/strings.dart';
 
-void showSnackBar(BuildContext context, String message, {int durationSeconds = 2}) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
+class SnackBarHelper {
+  static void showMessageError(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
-      duration: Duration(seconds: durationSeconds),
-    ),
-  );
+      backgroundColor: Colors.red,
+      duration: const Duration(seconds: 3),
+      action: SnackBarAction(
+        label: 'Fechar',
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    ));
+  }
+
+  static void showMessageSuccess(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.green,
+      duration: const Duration(seconds: 3),
+      action: SnackBarAction(
+        label: 'Fechar',
+        onPressed: () {
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        },
+      ),
+    ));
+  }
 }
+

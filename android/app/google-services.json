@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "351879037478",
+    "project_id": "cardapio-8545a",
+    "storage_bucket": "cardapio-8545a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351879037478:android:aefd335763bf4075125ce7",
+        "android_client_info": {
+          "package_name": "com.fatec.cardapio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWdqJ8dYk4zJ6cxyoMbI5Lgz7fq0Y5dUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
