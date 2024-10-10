@@ -4,6 +4,7 @@ import '../helpers/value_validation.dart';
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
+  final String? passwordConfirm;
   final double fontSize;
   final double borderRadius;
   final bool isPassword;
@@ -12,9 +13,10 @@ class CustomTextFormField extends StatefulWidget {
     super.key,
     required this.controller,
     required this.labelText,
+    this.passwordConfirm,
     this.fontSize = 28,
     this.borderRadius = 12,
-    this.isPassword = false,
+    this.isPassword = false
   });
 
   @override
@@ -23,6 +25,7 @@ class CustomTextFormField extends StatefulWidget {
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   bool _obscureText = true;
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -34,17 +37,31 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(widget.borderRadius)),
         suffixIcon: widget.isPassword
             ? IconButton(
-          icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-          onPressed: () {
-            setState(() {
-              _obscureText = !_obscureText;
-            });
-          },
-        )
+                icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              )
             : null,
       ),
       validator: (value) {
-        return ValueValidation.required(value);
+        String? isRequired = ValueValidation.required(value);
+
+        if (isRequired != null) {
+          return isRequired;
+        }
+
+        if (widget.isPassword && widget.passwordConfirm != null) {
+          String? isPasswordValid = ValueValidation.validateConfirmPassword(value, widget.passwordConfirm);
+
+          if (isPasswordValid != null) {
+            return isPasswordValid;
+          }
+        }
+
+        return null;
       },
     );
   }

@@ -2,33 +2,47 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../components/elevated_button_custom.dart';
-import '../../components/text_custom.dart';
+import '../../utils/messages.dart';
+import '../../widgets/elevated_button_custom.dart';
+import '../../widgets/text_custom.dart';
 import '../../helpers/show_snack_bar.dart';
 import '../../models/item_menu.dart';
 import '../../models/order_item.dart';
 import '../../store/order_store.dart';
 import '../../utils/strings.dart';
 
-class ItemDetails extends StatefulWidget {
-  const ItemDetails({super.key});
+class ItemDetailsView extends StatefulWidget {
+  const ItemDetailsView({super.key});
 
   @override
-  State<ItemDetails> createState() => _ItemDetailsState();
+  State<ItemDetailsView> createState() => _ItemDetailsViewState();
 }
 
-class _ItemDetailsState extends State<ItemDetails> {
+class _ItemDetailsViewState extends State<ItemDetailsView> {
+  int quantity = 1;
+
+  void _decreaseQuantityItem() {
+    setState(() {
+      if (quantity > 1) quantity--;
+    });
+  }
+
+  void _addQuantityItem() {
+    setState(() {
+      quantity++;
+    });
+  }
+
+  void _confirmItem(store, itemData) {
+    SnackBarHelper.showMessageSuccess(context, AppMessages.itemAddOrderMessage);
+    Navigator.pop(context);
+    store.addItem(OrderItem(name: itemData.name, quantity: quantity, price: itemData.price));
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<OrderStore>(context);
-    int quantity = 1;
     ItemMenu itemData = ModalRoute.of(context)!.settings.arguments as ItemMenu;
-
-    void confirmItem() {
-      SnackBarHelper.showMessageError(context, AppStrings.itemAddOrder);
-      Navigator.pop(context);
-      store.addItem(OrderItem(name: itemData.name, quantity: quantity, price: itemData.price));
-    }
 
     return Scaffold(
         appBar: AppBar(
@@ -38,14 +52,12 @@ class _ItemDetailsState extends State<ItemDetails> {
           padding: const EdgeInsets.all(20),
           child: ListView(children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: CachedNetworkImage(
-                imageUrl: itemData.image,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ),
+                borderRadius: BorderRadius.circular(50),
+                child: CachedNetworkImage(
+                    imageUrl: itemData.image,
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        CircularProgressIndicator(value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => const Icon(Icons.error))),
             ListTile(
               title: Text(itemData.name, style: const TextStyle(fontSize: 22)),
             ),
@@ -64,24 +76,20 @@ class _ItemDetailsState extends State<ItemDetails> {
                     IconButton(
                         icon: const Icon(Icons.remove),
                         onPressed: () {
-                          setState(() {
-                            if (quantity > 1) quantity--;
-                          });
+                          _decreaseQuantityItem();
                         }),
                     Text('$quantity', style: const TextStyle(fontSize: 22)),
                     IconButton(
                         icon: const Icon(Icons.add),
                         onPressed: () {
-                          setState(() {
-                            quantity++;
-                          });
+                          _addQuantityItem();
                         })
                   ])
                 ])),
             CustomElevatedButton(
                 value: AppStrings.addOrderLabel,
                 onPressed: () {
-                  confirmItem();
+                  _confirmItem(store, itemData);
                 })
           ]),
         ));

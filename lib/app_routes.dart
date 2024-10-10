@@ -9,10 +9,10 @@ import 'view/menu/menu.dart';
 
 class AppRoutes {
   static Map<String, WidgetBuilder> routes = {
-    Routes.login: (context) => const Login(),
-    Routes.menu: (context) => const Menu(),
-    Routes.register: (context) => const Register(),
-    Routes.itemDetails: (context) => const ItemDetails(),
-    Routes.orderResume: (context) => const OrderScreen(),
+    Routes.login: (context) => const LoginView(),
+    Routes.menu: (context) => const MenuView(),
+    Routes.register: (context) => const RegisterView(),
+    Routes.itemDetails: (context) => const ItemDetailsView(),
+    Routes.orderResume: (context) => const OrderResumeView(),
   };
 }

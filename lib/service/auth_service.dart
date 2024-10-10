@@ -20,7 +20,7 @@ class AuthService {
         onLoading(false);
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const Menu()),
+          MaterialPageRoute(builder: (context) => const MenuView()),
           (Route<dynamic> route) => false,
         );
       }
@@ -66,5 +66,9 @@ class AuthService {
         SnackBarHelper.showMessageError(context, 'Erro ao cadastrar, tente novamente.');
       }
     });
+  }
+
+  void logout() {
+    FirebaseAuth.instance.signOut();
   }
 }

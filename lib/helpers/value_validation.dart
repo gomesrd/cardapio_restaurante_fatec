@@ -24,4 +24,11 @@ class ValueValidation {
     }
     return null;
   }
+
+  static String? validateConfirmPassword(String? password, String? confirmPassword) {
+    if (password != confirmPassword) {
+      return 'As senhas não coincidem';
+    }
+    return null;
+  }
 }

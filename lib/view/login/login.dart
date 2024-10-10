@@ -1,24 +1,46 @@
 import 'package:flutter/material.dart';
 
-import '../../components/elevated_button_custom.dart';
-import '../../components/loading_overlay.dart';
-import '../../components/text_form_field_custom.dart';
+import '../../widgets/elevated_button_custom.dart';
+import '../../widgets/loading_overlay.dart';
+import '../../widgets/sized_box_custom.dart';
+import '../../widgets/text_form_field_custom.dart';
 import '../../service/auth_service.dart';
 import '../../utils/routes.dart';
 import '../../utils/strings.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formLoginPageKey = GlobalKey<FormState>();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   bool isLoading = false;
+
+  void _handleLogin() {
+    if (formLoginPageKey.currentState!.validate()) {
+      FocusScope.of(context).unfocus();
+      setState(() {
+        isLoading = true;
+      });
+      formLoginPageKey.currentState!.save();
+      AuthService().login(
+        email: email.text,
+        password: password.text,
+        formLoginPageKey: formLoginPageKey,
+        context: context,
+        onLoading: (loading) {
+          setState(() {
+            isLoading = loading;
+          });
+        },
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,37 +57,19 @@ class _LoginState extends State<Login> {
                         controller: email,
                         labelText: AppStrings.emailLabel,
                       ),
-                      const SizedBox(height: 20),
+                      const CustomSizedBox(),
                       CustomTextFormField(
                         controller: password,
                         labelText: AppStrings.passwordLabel,
                         isPassword: true,
                       ),
-                      const SizedBox(height: 20),
-                      // LoadingOverlay(isLoading: isLoading),
-                      // const SizedBox(height: 20),
+                      const CustomSizedBox(),
                       CustomElevatedButton(
                           value: AppStrings.loginLabel,
                           onPressed: () {
-                            if (formLoginPageKey.currentState!.validate()) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              formLoginPageKey.currentState!.save();
-                              AuthService().login(
-                                email: email.text,
-                                password: password.text,
-                                formLoginPageKey: formLoginPageKey,
-                                context: context,
-                                onLoading: (loading) {
-                                  setState(() {
-                                    isLoading = loading;
-                                  });
-                                },
-                              );
-                            }
+                            _handleLogin();
                           }),
-                      const SizedBox(height: 20),
+                      const CustomSizedBox(),
                       CustomElevatedButton(
                           value: AppStrings.createAccountLabel,
                           onPressed: () {

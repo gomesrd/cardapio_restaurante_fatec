@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'item_menu.dart';
 
 class CategoryMenu {
