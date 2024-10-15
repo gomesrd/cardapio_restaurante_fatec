@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/assets.dart';
 import '../../widgets/elevated_button_custom.dart';
 import '../../widgets/loading_overlay.dart';
 import '../../widgets/sized_box_custom.dart';
@@ -48,21 +49,30 @@ class _LoginViewState extends State<LoginView> {
         isLoading: isLoading,
         child: Scaffold(
             appBar: AppBar(),
-            body: Padding(
+            body: SingleChildScrollView(
                 padding: const EdgeInsets.all(8.0),
                 child: Form(
                     key: formLoginPageKey,
                     child: Column(children: [
+                      ClipRRect(
+                          borderRadius: BorderRadius.circular(25),
+                          child: Image.asset(
+                            AppAssets.logoPath,
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            fit: BoxFit.contain,
+                          )),
+                      const CustomSizedBox(),
                       CustomTextFormField(
                         controller: email,
                         labelText: AppStrings.emailLabel,
+                        icon: Icons.email,
                       ),
                       const CustomSizedBox(),
                       CustomTextFormField(
-                        controller: password,
-                        labelText: AppStrings.passwordLabel,
-                        isPassword: true,
-                      ),
+                          controller: password,
+                          labelText: AppStrings.passwordLabel,
+                          isPassword: true,
+                          icon: Icons.lock),
                       const CustomSizedBox(),
                       CustomElevatedButton(
                           value: AppStrings.loginLabel,

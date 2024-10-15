@@ -16,8 +16,7 @@ class AppStrings {
   static const String passwordLabel = "Senha";
   static const String priceLabel = "Preço";
   static const String registerLabel = "Cadastrar";
+  static const String registerTitle = "Cadastro";
   static const String totalLabel = "Total";
   static const String unitPriceLabel = "Preço Unitário";
 }
-
-// static const String confirmOrder = "Confirmar Pedido";

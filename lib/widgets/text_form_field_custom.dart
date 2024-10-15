@@ -4,20 +4,21 @@ import '../helpers/value_validation.dart';
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController controller;
   final String labelText;
-  final String? passwordConfirm;
+  final TextEditingController? passwordConfirm;
   final double fontSize;
   final double borderRadius;
   final bool isPassword;
+  final IconData? icon;
 
-  const CustomTextFormField({
-    super.key,
-    required this.controller,
-    required this.labelText,
-    this.passwordConfirm,
-    this.fontSize = 28,
-    this.borderRadius = 12,
-    this.isPassword = false
-  });
+  const CustomTextFormField(
+      {super.key,
+      required this.controller,
+      required this.labelText,
+      this.passwordConfirm,
+      this.fontSize = 28,
+      this.borderRadius = 12,
+      this.isPassword = false,
+      this.icon});
 
   @override
   _CustomTextFormFieldState createState() => _CustomTextFormFieldState();
@@ -25,6 +26,8 @@ class CustomTextFormField extends StatefulWidget {
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   bool _obscureText = true;
+
+  get passwordConfirm => widget.passwordConfirm;
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +38,19 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       decoration: InputDecoration(
         labelText: widget.labelText,
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(widget.borderRadius)),
-        suffixIcon: widget.isPassword
-            ? IconButton(
-                icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-                onPressed: () {
-                  setState(() {
-                    _obscureText = !_obscureText;
-                  });
-                },
-              )
-            : null,
+        prefixIcon: (widget.icon == null) ? null : Icon(widget.icon),
+        suffixIcon: () {
+          if (widget.isPassword) {
+            return IconButton(
+              icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+            );
+          }
+        }(),
       ),
       validator: (value) {
         String? isRequired = ValueValidation.required(value);
@@ -53,9 +59,11 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           return isRequired;
         }
 
-        if (widget.isPassword && widget.passwordConfirm != null) {
-          String? isPasswordValid = ValueValidation.validateConfirmPassword(value, widget.passwordConfirm);
-
+        if (widget.isPassword && passwordConfirm != null) {
+          String? isPasswordValid =
+              ValueValidation.validateConfirmPassword(value, passwordConfirm.text);
+          print(value);
+          print("confirmação: $passwordConfirm");
           if (isPasswordValid != null) {
             return isPasswordValid;
           }

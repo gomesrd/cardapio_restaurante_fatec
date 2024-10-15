@@ -1,6 +1,7 @@
 import '../models/category_menu.dart';
 import '../models/item_menu.dart';
 
+
 class GenerateMenu {
   static List<CategoryMenu> generateMenu() {
     List<CategoryMenu> list = [

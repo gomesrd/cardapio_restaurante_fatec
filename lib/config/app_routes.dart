@@ -1,11 +1,11 @@
-import 'package:cardapio/utils/routes.dart';
-import 'package:cardapio/view/item_details/item_details.dart';
-import 'package:cardapio/view/order_resume/order_resume.dart';
-import 'package:cardapio/view/register/register.dart';
-import 'package:flutter/material.dart';
-import 'package:cardapio/view/login/login.dart';
+import 'package:flutter/cupertino.dart';
 
-import 'view/menu/menu.dart';
+import '../utils/routes.dart';
+import '../view/item_details/item_details.dart';
+import '../view/login/login.dart';
+import '../view/menu/menu.dart';
+import '../view/order_resume/order_resume.dart';
+import '../view/register/register.dart';
 
 class AppRoutes {
   static Map<String, WidgetBuilder> routes = {

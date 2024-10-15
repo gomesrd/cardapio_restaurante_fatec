@@ -49,7 +49,9 @@ class _RegisterViewState extends State<RegisterView> {
     return LoadingOverlay(
         isLoading: isLoading,
         child: Scaffold(
-            appBar: AppBar(),
+            appBar: AppBar(
+              title: const Text(AppStrings.registerTitle),
+            ),
             body: SingleChildScrollView(
                 child: Form(
                     key: formLoginPageKey,
@@ -57,25 +59,27 @@ class _RegisterViewState extends State<RegisterView> {
                         padding: const EdgeInsets.all(8.0),
                         child: Column(children: [
                           CustomTextFormField(
-                            controller: fullName,
-                            labelText: AppStrings.fullNameLabel,
-                          ),
+                              controller: fullName,
+                              labelText: AppStrings.fullNameLabel,
+                              icon: Icons.person),
                           const CustomSizedBox(),
                           CustomTextFormField(
-                            controller: email,
-                            labelText: AppStrings.emailLabel,
-                          ),
+                              controller: email,
+                              labelText: AppStrings.emailLabel,
+                              icon: Icons.email),
                           const CustomSizedBox(),
                           CustomTextFormField(
                               controller: password,
                               labelText: AppStrings.passwordLabel,
-                              isPassword: true),
+                              isPassword: true,
+                              icon: Icons.lock),
                           const CustomSizedBox(),
                           CustomTextFormField(
                               controller: confirmPassword,
                               labelText: AppStrings.confirmPasswordLabel,
-                              passwordConfirm: password.text,
-                              isPassword: true),
+                              passwordConfirm: password,
+                              isPassword: true,
+                              icon: Icons.lock),
                           const CustomSizedBox(),
                           CustomElevatedButton(
                             value: AppStrings.registerLabel,
