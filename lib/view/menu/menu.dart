@@ -107,17 +107,16 @@ class _MenuViewState extends State<MenuView> {
                       return ListTile(
                           title: Text(item.name),
                           subtitle: Text(item.description),
-                          trailing: Text('R\$ ${item.price.toStringAsFixed(2)}'),
+                          trailing: Text('R\$ ${item.price.toStringAsFixed(2)}',
+                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                           leading: SizedBox(
-                            height: 50,
-                            width: 50,
-                            child: CachedNetworkImage(
-                              imageUrl: item.image,
-                              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                                  CircularProgressIndicator(value: downloadProgress.progress),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
-                            ),
-                          ),
+                              height: 50,
+                              width: 50,
+                              child: Image.asset(
+                                item.image,
+                                height: MediaQuery.of(context).size.height * 0.3,
+                                fit: BoxFit.contain,
+                              )),
                           onTap: () {
                             _navigateItemDetailsView(item);
                           });

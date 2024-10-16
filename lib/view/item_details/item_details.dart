@@ -53,11 +53,11 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
           child: ListView(children: [
             ClipRRect(
                 borderRadius: BorderRadius.circular(50),
-                child: CachedNetworkImage(
-                    imageUrl: itemData.image,
-                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                        CircularProgressIndicator(value: downloadProgress.progress),
-                    errorWidget: (context, url, error) => const Icon(Icons.error))),
+                child: Image.asset(
+                  itemData.image,
+                  height: MediaQuery.of(context).size.height * 0.3,
+                  fit: BoxFit.contain,
+                )),
             ListTile(
               title: Text(itemData.name, style: const TextStyle(fontSize: 22)),
             ),

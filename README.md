@@ -4,7 +4,6 @@
 - Andre Rocha de Andrade Ferrari
 
 
-
 # App de Cardápio da Cafeteria da Fatec
 
 Bem-vindo ao app de cardápio da cafeteria da Fatec! Este aplicativo foi desenvolvido em Flutter e está conectado ao Firebase, permitindo que você crie uma nova conta, faça login ou utilize uma conta já existente.
