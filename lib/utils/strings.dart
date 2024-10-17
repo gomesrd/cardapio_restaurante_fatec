@@ -11,7 +11,7 @@ class AppStrings {
   static const String fullNameLabel = "Nome Completo";
   static const String goBackLabel = "Voltar";
   static const String loginLabel = "Login";
-  static const String menuLabel = "Cardápio";
+  static const String menuLabel = "Cardápio Fatec RP";
   static const String orderItems = "Itens do Pedido";
   static const String passwordLabel = "Senha";
   static const String priceLabel = "Preço";

@@ -1,10 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cardapio/service/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../helpers/generate_menu.dart';
-import '../../models/category_menu.dart';
 import '../../store/order_store.dart';
 import '../../utils/routes.dart';
 import '../../utils/strings.dart';
@@ -18,13 +14,6 @@ class MenuView extends StatefulWidget {
 }
 
 class _MenuViewState extends State<MenuView> {
-  List<CategoryMenu> listMenu = [];
-
-  @override
-  void initState() {
-    listMenu = GenerateMenu.generateMenu();
-    super.initState();
-  }
 
   void _navigateOrderResume() {
     Navigator.pushNamed(context, Routes.orderResume);
@@ -90,9 +79,9 @@ class _MenuViewState extends State<MenuView> {
         body: Padding(
             padding: const EdgeInsets.all(20),
             child: ListView.builder(
-                itemCount: listMenu.length,
+                itemCount: store.listMenu.length,
                 itemBuilder: (context, index) {
-                  final category = listMenu[index];
+                  final category = store.listMenu[index];
                   return Card(
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Padding(

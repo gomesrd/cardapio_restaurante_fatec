@@ -21,16 +21,12 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width ?? double.infinity,
-      height: height ?? 50.0,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            // backgroundColor: color ?? Theme.of(context).primaryColor,
-            // textStyle: textStyle ?? const TextStyle(fontSize: 16, color: Colors.black),
-            ),
-        onPressed: onPressed,
-        child: Text(value),
-      ),
-    );
+        width: width ?? double.infinity,
+        height: height ?? 50.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(),
+          onPressed: onPressed,
+          child: Text(value),
+        ));
   }
 }

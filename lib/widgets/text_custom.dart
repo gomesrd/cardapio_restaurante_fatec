@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../helpers/value_validation.dart';
 
 class CustomText extends StatefulWidget {
   final String labelText;
@@ -14,11 +13,8 @@ class CustomText extends StatefulWidget {
 }
 
 class _CustomTextState extends State<CustomText> {
-
   @override
   Widget build(BuildContext context) {
-    return Text(
-      widget.labelText,
-    );
+    return Text(widget.labelText);
   }
 }

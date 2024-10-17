@@ -32,45 +32,40 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: widget.controller,
-      obscureText: widget.isPassword ? _obscureText : false,
-      style: TextStyle(fontSize: widget.fontSize),
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(widget.borderRadius)),
-        prefixIcon: (widget.icon == null) ? null : Icon(widget.icon),
-        suffixIcon: () {
-          if (widget.isPassword) {
-            return IconButton(
-              icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText;
-                });
-              },
-            );
+        controller: widget.controller,
+        obscureText: widget.isPassword ? _obscureText : false,
+        style: TextStyle(fontSize: widget.fontSize),
+        decoration: InputDecoration(
+            labelText: widget.labelText,
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(widget.borderRadius)),
+            prefixIcon: (widget.icon == null) ? null : Icon(widget.icon),
+            suffixIcon: () {
+              if (widget.isPassword) {
+                return IconButton(
+                  icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText;
+                    });
+                  },
+                );
+              }
+            }()),
+        validator: (value) {
+          String? isRequired = ValueValidation.required(value);
+
+          if (isRequired != null) {
+            return isRequired;
           }
-        }(),
-      ),
-      validator: (value) {
-        String? isRequired = ValueValidation.required(value);
 
-        if (isRequired != null) {
-          return isRequired;
-        }
-
-        if (widget.isPassword && passwordConfirm != null) {
-          String? isPasswordValid =
-              ValueValidation.validateConfirmPassword(value, passwordConfirm.text);
-          print(value);
-          print("confirmação: $passwordConfirm");
-          if (isPasswordValid != null) {
-            return isPasswordValid;
+          if (widget.isPassword && passwordConfirm != null) {
+            String? isPasswordValid =
+                ValueValidation.validateConfirmPassword(value, passwordConfirm.text);
+            if (isPasswordValid != null) {
+              return isPasswordValid;
+            }
           }
-        }
-
-        return null;
-      },
-    );
+          return null;
+        });
   }
 }

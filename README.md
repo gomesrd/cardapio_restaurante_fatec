@@ -1,4 +1,4 @@
-# Avalição Máteria Programação para Dispositivos Móveis - Fatec RP
+# Projeto Prático - Programação para Dispositivos Móveis - Fatec RP
 # Alunos
 - Robson Douglas dos Santos Gomes
 - Andre Rocha de Andrade Ferrari
@@ -48,5 +48,5 @@ Bem-vindo ao app de cardápio da cafeteria da Fatec! Este aplicativo foi desenvo
 ## Acesso
 ### Para acessar a conta de demonstração, você pode usar as seguintes credenciais:
 
-- Email: douglaspg@outlook.com
-- Senha: 15059471
+- Email: aluno@fatec.gov.br
+- Senha: 123456789
