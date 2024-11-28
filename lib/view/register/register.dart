@@ -4,7 +4,7 @@ import '../../widgets/elevated_button_custom.dart';
 import '../../widgets/loading_overlay.dart';
 import '../../widgets/sized_box_custom.dart';
 import '../../widgets/text_form_field_custom.dart';
-import '../../service/auth_service.dart';
+import '../../service/auth/auth_service.dart';
 import '../../utils/strings.dart';
 
 class RegisterView extends StatefulWidget {

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../helpers/show_snack_bar.dart';
 import '../../utils/assets.dart';
 import '../../widgets/elevated_button_custom.dart';
 import '../../widgets/loading_overlay.dart';
 import '../../widgets/sized_box_custom.dart';
 import '../../widgets/text_form_field_custom.dart';
-import '../../service/auth_service.dart';
+import '../../service/auth/auth_service.dart';
 import '../../utils/routes.dart';
 import '../../utils/strings.dart';
 
@@ -18,8 +19,9 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formLoginPageKey = GlobalKey<FormState>();
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController(text: 'douglaspg@outlook.com');
+  TextEditingController emailRecovery = TextEditingController(text: "");
+  TextEditingController password = TextEditingController(text: '15059471');
   bool isLoading = false;
 
   void _handleLogin() {
@@ -41,6 +43,12 @@ class _LoginViewState extends State<LoginView> {
         },
       );
     }
+  }
+
+  void _handleRecoveryPassword() {
+    AuthService().recoveryPassword(emailRecovery.text);
+    Navigator.pop(context);
+    SnackBarHelper.showMessageSuccess(context, 'Email enviado com sucesso.');
   }
 
   @override
@@ -81,10 +89,68 @@ class _LoginViewState extends State<LoginView> {
                           }),
                       const CustomSizedBox(),
                       CustomElevatedButton(
+                        value: AppStrings.recoveryPassword,
+                        onPressed: () {
+                          _showDialogRecoveryPassword();
+                        },
+                      ),
+                      const CustomSizedBox(),
+                      CustomElevatedButton(
                           value: AppStrings.createAccountLabel,
                           onPressed: () {
                             Navigator.pushNamed(context, Routes.register);
                           })
                     ])))));
+  }
+
+  void _showDialogRecoveryPassword() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Center(
+          child: AlertDialog(
+            title: Text("Esqueceu a senha?"),
+            content: Container(
+              height: 150,
+              width: 300,
+              child: Column(
+                children: [
+                  const Text(
+                    "Informe seu email para receber um link de recuperação de senha.",
+                  ),
+                  SizedBox(height: 25),
+                  CustomTextFormField(
+                    controller: emailRecovery,
+                    labelText: AppStrings.emailLabel,
+                    icon: Icons.email,
+                  ),
+                ],
+              ),
+            ),
+            actionsPadding: const EdgeInsets.all(20),
+            actions: [
+              ElevatedButton(
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(100, 40),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancelar'),
+              ),
+              ElevatedButton(
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(100, 40),
+                ),
+                onPressed: () {
+                  _handleRecoveryPassword();
+                },
+                child: const Text('Enviar'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

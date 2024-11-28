@@ -2,18 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../helpers/show_snack_bar.dart';
-import '../utils/messages.dart';
-import '../view/menu/menu.dart';
+import '../../helpers/show_snack_bar.dart';
+import '../../utils/messages.dart';
+import '../../view/menu/menu.dart';
 
 class AuthService {
+  final FirebaseAuth authFirebase = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   void login(
       {required String email,
       required String password,
       required GlobalKey<FormState> formLoginPageKey,
       required BuildContext context,
       required Function(bool) onLoading}) {
-    FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((res) {
+    authFirebase.signInWithEmailAndPassword(email: email, password: password).then((res) {
       if (context.mounted) {
         formLoginPageKey.currentState!.reset();
         // Navigator.pushNamed(context, Routes.menu);
@@ -46,10 +49,8 @@ class AuthService {
       required GlobalKey<FormState> formLoginPageKey,
       required BuildContext context,
       required Function(bool) onLoading}) {
-    FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((res) {
-      FirebaseFirestore.instance.collection('users').add({
+    authFirebase.createUserWithEmailAndPassword(email: email, password: password).then((res) {
+      firestore.collection('users').add({
         "uid": res.user!.uid.toString(),
         "full_name": fullName,
       });
@@ -75,6 +76,14 @@ class AuthService {
   }
 
   void logout() {
-    FirebaseAuth.instance.signOut();
+    authFirebase.signOut();
+  }
+
+  String getUidCurrentUser() {
+    return authFirebase.currentUser?.uid ?? "";
+  }
+
+  void recoveryPassword(String email) async {
+    await authFirebase.sendPasswordResetEmail(email: email);
   }
 }

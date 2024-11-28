@@ -19,4 +19,5 @@ class AppStrings {
   static const String registerTitle = "Cadastro";
   static const String totalLabel = "Total";
   static const String unitPriceLabel = "Preço Unitário";
+  static const String recoveryPassword = "Recuperar Senha";
 }

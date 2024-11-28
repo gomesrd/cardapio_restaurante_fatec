@@ -1,12 +1,14 @@
+import 'package:cardapio/models/order_update.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../service/order/order_service.dart';
 import '../../utils/messages.dart';
 import '../../widgets/elevated_button_custom.dart';
 import '../../widgets/text_custom.dart';
 import '../../helpers/show_snack_bar.dart';
-import '../../models/item_menu.dart';
-import '../../models/order_item.dart';
+import '../../models/menu_items.dart';
+import '../../models/order.dart';
 import '../../store/order_store.dart';
 import '../../utils/strings.dart';
 
@@ -35,13 +37,23 @@ class _ItemDetailsViewState extends State<ItemDetailsView> {
   void _confirmItem(store, itemData) {
     SnackBarHelper.showMessageSuccess(context, AppMessages.itemAddOrderMessage);
     Navigator.pop(context);
-    store.addItem(OrderItem(name: itemData.name, quantity: quantity, price: itemData.price));
+    store.addItem(OrderItems(itemId: itemData.id, quantity: quantity, price: itemData.price, itemName: itemData.name));
+    if (store.orderId == null) {
+      OrderService().createOrder(orderRequest: store.orderMenu).then((value) {
+        store.setOrderId(value);
+      });
+    }
+    if (store.orderId != null) {
+      OrderService().updateOrder(
+          orderMenuUpdateRequest: OrderMenuUpdate(status: store.orderMenu.status, items: store.orderMenu.items),
+          docId: store.orderId);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<OrderStore>(context);
-    ItemMenu itemData = ModalRoute.of(context)!.settings.arguments as ItemMenu;
+    MenuItems itemData = ModalRoute.of(context)!.settings.arguments as MenuItems;
 
     return Scaffold(
         appBar: AppBar(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/show_snack_bar.dart';
+import '../../models/order_update.dart';
+import '../../service/order/order_service.dart';
 import '../../store/order_store.dart';
 import '../../utils/messages.dart';
 import '../../utils/strings.dart';
@@ -17,20 +19,31 @@ class OrderResumeView extends StatefulWidget {
 
 class _OrderResumeViewState extends State<OrderResumeView> {
   void _confirmOrder(store, context) {
-    if (store.items.isEmpty) return;
-    store.clear();
+    OrderService().createCategoria();
+
+    if (store.orderMenu.items.isEmpty) return;
     Navigator.pop(context);
     SnackBarHelper.showMessageSuccess(context, AppMessages.orderConfirmedMessage);
+    OrderService().updateOrder(
+        orderMenuUpdateRequest: OrderMenuUpdate(status: 'FINISHED', items: store.orderMenu.items),
+        docId: store.orderId);
+    store.clearOrder();
   }
 
   void _decreaseQuantityItem(item, store) {
     if (item.quantity > 1) {
       store.updateItemQuantity(item, item.quantity - 1);
+      OrderService().updateOrder(
+          orderMenuUpdateRequest: OrderMenuUpdate(status: store.orderMenu.status, items: store.orderMenu.items),
+          docId: store.orderId);
     }
   }
 
   void _addQuantityItem(item, store) {
     store.updateItemQuantity(item, item.quantity + 1);
+    OrderService().updateOrder(
+        orderMenuUpdateRequest: OrderMenuUpdate(status: store.orderMenu.status, items: store.orderMenu.items),
+        docId: store.orderId);
   }
 
   @override
@@ -44,17 +57,15 @@ class _OrderResumeViewState extends State<OrderResumeView> {
         body: Column(children: [
           Expanded(
               child: ListView.builder(
-                  itemCount: store.items.length,
+                  itemCount: store.orderMenu.items.length,
                   itemBuilder: (context, index) {
-                    final item = store.items[index];
+                    final item = store.orderMenu.items[index];
                     return ListTile(
-                        title: Text(item.name),
+                        title: Text(item.itemName),
                         subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(
-                              "${AppStrings.unitPriceLabel}: R\$ ${item.price.toStringAsFixed(2)}"),
+                          Text("${AppStrings.unitPriceLabel}: R\$ ${item.price.toStringAsFixed(2)}"),
                           Text("${AppStrings.amountLabel}: ${item.quantity}"),
-                          Text(
-                              "${AppStrings.totalLabel}: R\$ ${item.totalPrice.toStringAsFixed(2)}"),
+                          Text("${AppStrings.totalLabel}: R\$ ${item.totalPrice.toStringAsFixed(2)}"),
                         ]),
                         trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                           IconButton(
@@ -72,6 +83,10 @@ class _OrderResumeViewState extends State<OrderResumeView> {
                               icon: const Icon(Icons.delete),
                               onPressed: () {
                                 store.removeItem(item);
+                                OrderService().updateOrder(
+                                    orderMenuUpdateRequest:
+                                        OrderMenuUpdate(status: store.orderMenu.status, items: store.orderMenu.items),
+                                    docId: store.orderId!!);
                               }),
                         ]));
                   })),
