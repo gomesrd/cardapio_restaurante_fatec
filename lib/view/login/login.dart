@@ -19,9 +19,9 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   final GlobalKey<FormState> formLoginPageKey = GlobalKey<FormState>();
-  TextEditingController email = TextEditingController(text: 'douglaspg@outlook.com');
+  TextEditingController email = TextEditingController(text: '');
   TextEditingController emailRecovery = TextEditingController(text: "");
-  TextEditingController password = TextEditingController(text: '15059471');
+  TextEditingController password = TextEditingController(text: '');
   bool isLoading = false;
 
   void _handleLogin() {

@@ -48,5 +48,5 @@ Bem-vindo ao app de cardápio do Restaurante da Fatec! Este aplicativo foi desen
 ## Acesso
 ### Para acessar a conta de demonstração, você pode usar as seguintes credenciais:
 
-- Email: aluno@fatec.gov.br
-- Senha: 123456789
+- Email: aluno@fatecsp.gov.br
+- Senha: Mudar@123
