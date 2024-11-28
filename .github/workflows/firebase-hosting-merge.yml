@@ -1,0 +1,30 @@
+name: Deploy to Firebase Hosting on merge
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Instalar o Flutter
+      - name: Install Flutter Manually
+        run: |
+          git clone -b stable https://github.com/flutter/flutter.git
+          echo "$PWD/flutter/bin" >> $GITHUB_PATH
+          flutter/bin/flutter --version
+
+      # Construir o projeto Flutter para Web
+      - name: Build Flutter Web
+        run: flutter build web
+
+      # Fazer o deploy para o Firebase Hosting
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_CARDAPIO_8545A }}
+          channelId: live
+          projectId: cardapio-8545a

@@ -1,1 +1,37 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"cardapio-8545a","appId":"1:351879037478:android:aefd335763bf4075125ce7","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"cardapio-8545a","configurations":{"android":"1:351879037478:android:aefd335763bf4075125ce7","ios":"1:351879037478:ios:57003b594230ea97125ce7","web":"1:351879037478:web:8417eadd32223406125ce7"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "cardapio-8545a",
+          "appId": "1:351879037478:android:aefd335763bf4075125ce7",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "cardapio-8545a",
+          "configurations": {
+            "android": "1:351879037478:android:aefd335763bf4075125ce7",
+            "ios": "1:351879037478:ios:57003b594230ea97125ce7",
+            "web": "1:351879037478:web:8417eadd32223406125ce7"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
