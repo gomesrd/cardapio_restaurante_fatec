@@ -19,8 +19,6 @@ class OrderResumeView extends StatefulWidget {
 
 class _OrderResumeViewState extends State<OrderResumeView> {
   void _confirmOrder(store, context) {
-    OrderService().createCategoria();
-
     if (store.orderMenu.items.isEmpty) return;
     Navigator.pop(context);
     SnackBarHelper.showMessageSuccess(context, AppMessages.orderConfirmedMessage);
